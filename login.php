@@ -1,14 +1,11 @@
 <?php
-session_start();
-
+define("CLIENTAREA", true);
 require "init.php";
 
-foreach ($_COOKIE as $cookieName => $cookieValue) {
-    if (strpos($cookieName, 'WHMCS') === 0 && !empty($cookieValue)) {
-        header('Location: /clientarea.php');
-        exit;
-    }
+if(Auth::user()) {
+    App::redirect("clientarea.php");
 }
+session_start();
 
 $issuer = 'ton issuer url';
 $client_id = 'le client id';
