@@ -3,32 +3,12 @@ session_start();
 
 require "init.php";
 
-$sessionCookieValue = null;
-foreach ($_COOKIE as $name => $value) {
-    if (strpos($name, 'WHMCS3SL') === 0) {
-        $sessionCookieValue = $value;
-        break;
+foreach ($_COOKIE as $cookieName => $cookieValue) {
+    if (strpos($cookieName, 'WHMCS') === 0 && !empty($cookieValue)) {
+        header('Location: /clientarea.php');
+        exit;
     }
 }
-
-if (!$sessionCookieValue) {
-    $isConnected = false;
-} else {
-    $response = localAPI('ValidateSession', ['sessionkey' => $sessionCookieValue]);
-
-    if (isset($response['result']) && $response['result'] === 'success' && !empty($response['userid'])) {
-        $isConnected = true;
-        $userid = $response['userid'];
-    } else {
-        $isConnected = false;
-    }
-}
-
-if ($isConnected) {
-    header('Location: clientarea.php');
-    exit;
-}
-
 
 $issuer = 'ton issuer url';
 $client_id = 'le client id';
