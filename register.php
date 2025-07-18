@@ -8,9 +8,7 @@ if(Auth::user()) {
 session_start();
 
 
-$issuer = 'ton issuer url';
-$client_id = 'le client id';
-$redirect_uri = 'https://ton-whmcs.com/sso-callback.php';
+include 'sso-config.php';
 
 $_SESSION['sso_flow'] = 'login';
 
